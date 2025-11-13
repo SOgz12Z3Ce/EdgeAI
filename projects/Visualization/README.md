@@ -23,3 +23,15 @@ pip install -r requirements.txt
 ```
 jupyter notebook main.ipynb
 ```
+
+## FAQ
+
+### 运行时卡死？
+
+A：初次运行时，可能需要为 `matplotlib.pyplot` 设置渲染用后端：
+```python
+import matplotlib
+matplotlib.use('TkAgg')
+```
+
+(StackOverflow)[https://stackoverflow.com/questions/44262242/pyplot-plot-freezes-not-responding]
