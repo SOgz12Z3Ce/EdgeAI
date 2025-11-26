@@ -17,7 +17,7 @@
 Error #15: Initializing libiomp5md.dll, but found libiomp5md.dll already initialized.
 ```
 
-搜了一圈，在(一篇文章)[https://zhuanlan.zhihu.com/p/371649016]里看到是环境里的两个同名 dll 有冲突：
+搜了一圈，在[一篇文章](https://zhuanlan.zhihu.com/p/371649016)里看到是环境里的两个同名 dll 有冲突：
 
 - ~/miniconda3/envs/（环境名）/Lib/site-packages/torch/libiomp5md.dll
 - ~/miniconda3/envs/（环境名）/Library/bin/libiomp5md.dll
@@ -58,3 +58,4 @@ Error #15: Initializing libiomp5md.dll, but found libiomp5md.dll already initial
   - 值得注意的是，这些图像是训练集图像裁剪、循环、拼接、放大缩小、镜像翻转、调整色调……等等操作后的结果，这是为了提高模型的泛化能力。
 - `val_batch0_labels.jpg`：验证集的标签。
 - `val_batch0_pred.jpg`：模型在验证集上的预测效果。
+

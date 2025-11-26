@@ -61,7 +61,7 @@ $$
 \theta \to \theta - \eta \frac{\partial L}{\partial \theta}
 $$
 
-其中 \theta 是参数，\eta 是学习率，用来控制参数调整的步幅。
+其中 $\theta$ 是参数，$\eta$ 是学习率，用来控制参数调整的步幅。
 
 #### 变体
 
@@ -95,7 +95,7 @@ $$
 
 ##### 学习率调度
 
-学习率 \eta 也可以是在训练过程中动态变化的，根据需求的不同有：
+学习率 $\eta$ 也可以是在训练过程中动态变化的，根据需求的不同有：
 
 - 分段：在训练的不同阶段逐步降低学习率。
 - 平滑：例如在训练初期慢慢提升学习率，随后逐渐衰减。
@@ -110,10 +110,10 @@ $$
 
 激活函数种类很多，常见的有：
 
-- Sigmoid：\sigma(x) = \frac{1}{1 + e^{-x}}
-- Tanh：\tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}
-- ReLU：\text{ReLU}(x) = \max(0, x)
-- GELU：\text{GELU}(x) = x \cdot \Phi(x)
+- Sigmoid：$\sigma(x) = \frac{1}{1 + e^{-x}}$
+- Tanh：$\tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}$
+- ReLU：$\text{ReLU}(x) = \max(0, x)$
+- GELU：$\text{GELU}(x) = x \cdot \Phi(x)$
 
 不同的激活函数理论上都“可以”用作激活函数，但是它们更擅长特定的场景：
 
