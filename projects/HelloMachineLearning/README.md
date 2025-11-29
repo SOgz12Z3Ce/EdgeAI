@@ -19,7 +19,7 @@ PyTorch: 2.9.0+cu128
 
 安装所需依赖：
 ```
-pip install -r requirements.txt
+conda env create -f environment.yml
 ```
 
 ## 运行

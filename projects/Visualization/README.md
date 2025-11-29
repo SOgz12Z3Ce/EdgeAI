@@ -14,7 +14,7 @@
 
 安装所需依赖：
 ```
-pip install -r requirements.txt
+conda create -f environment.yml
 ```
 
 ## 运行
