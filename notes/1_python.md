@@ -158,6 +158,8 @@ pip3 install torch torchvision --index-url https://download.pytorch.org/whl/cu12
 conda install conda-forge::pytorch-gpu
 ```
 
+不过这在我的机器上没有成功，其中可能有未解决的细节问题。
+
 #### 完毕
 
 完成！PyCharm 之类的 IDE 可以使用这个环境，或者，也可以随时激活这个环境来运行程序。
