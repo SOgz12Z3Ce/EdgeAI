@@ -17,7 +17,7 @@
 
 安装所需依赖：
 ```
-pip install -r requirements.txt
+conda create -f environment.yml
 ```
 
 训练需要[东北大学钢材检测数据集NEU-DET](https://aistudio.baidu.com/datasetdetail/195425)，需要下载并解压在项目根目录。

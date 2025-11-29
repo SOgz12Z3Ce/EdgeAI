@@ -2,10 +2,10 @@
 rm ./dataset -Recurse -Force -ErrorAction SilentlyContinue
 
 # create folders
-mkdir './dataset/images/train' -Force | Out-Null
-mkdir './dataset/images/val' -Force | Out-Null
-mkdir './dataset/labels/train' -Force | Out-Null
-mkdir './dataset/labels/val' -Force | Out-Null
+mkdir './datasets/images/train' -Force | Out-Null
+mkdir './datasets/images/val' -Force | Out-Null
+mkdir './datasets/labels/train' -Force | Out-Null
+mkdir './datasets/labels/val' -Force | Out-Null
 mkdir './tmp' -Force | Out-Null
 
 $classes = @(
