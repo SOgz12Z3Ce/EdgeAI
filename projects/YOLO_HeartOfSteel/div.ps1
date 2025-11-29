@@ -51,15 +51,15 @@ foreach ($c in $classes) {
 	$labelsVal = $labelsAll | Get-Random -Count 60  # 300 * 20% = 60
 	$labelsTrain = $labelsAll | Where-Object {$_ -notin $labelsVal}  # remove val files
 
-	$labelsTrain | cp -Destination ./dataset/labels/train
-	$labelsVal | cp -Destination ./dataset/labels/val
+	$labelsTrain | cp -Destination ./datasets/labels/train
+	$labelsVal | cp -Destination ./datasets/labels/val
 
 	# images
 	$imagesTrain = $labelsTrain | %{gi "./NEU-DET (1)/IMAGES/$($_.Name -replace 'txt$', 'jpg')"}
 	$imagesVal = $labelsVal | %{gi "./NEU-DET (1)/IMAGES/$($_.Name -replace 'txt$', 'jpg')"}
 
-	$imagesTrain | cp -Destination ./dataset/images/train
-	$imagesVal | cp -Destination ./dataset/images/val
+	$imagesTrain | cp -Destination ./datasets/images/train
+	$imagesVal | cp -Destination ./datasets/images/val
 }
 
 # clear
