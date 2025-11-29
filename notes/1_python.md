@@ -152,9 +152,21 @@ Fri Oct 17 20:48:18 2025
 pip3 install torch torchvision --index-url https://download.pytorch.org/whl/cu128
 ```
 
+或者，如果担心 conda 和 pip 之间的兼容性问题，可以安装 conda 自己的包。从官网找到 `pytorch-gpu`（<https://anaconda.org/channels/conda-forge/packages/pytorch-gpu/overview>）
+
+```powershell
+conda install conda-forge::pytorch-gpu
+```
+
 #### 完毕
 
 完成！PyCharm 之类的 IDE 可以使用这个环境，或者，也可以随时激活这个环境来运行程序。
+
+#### 后记：requirements.txt？
+
+众所周知，python 可以用 `pip freeze > requirements.txt` 来导出项目用到的包及其版本。之后再用 `pip install -r requirements.txt` 来安装环境。
+
+conda 不太一样，它可以用 `conda env export > environment.yml` 导出，用 `conda env create -f environment.yml` 安装环境。
 
 ## 特色
 
