@@ -364,3 +364,98 @@ with open('python.md', 'r') as file:
 ### 字符串与字符
 
 Python 的字符串没什么很特别的，但是非常有趣的是，Python 没有字符类型，只有长度为 1 的字符串而已。倒反天罡。
+
+## 库
+
+记录一些常用库里面的东西。
+
+### NumPy
+
+#### ndarray
+
+NumPy 的一个基础类是 `ndarray`，它是 NumPy 专门用来表示高阶数组用的容器。虽然 Python 早就有 `list` 了，但这种东西为了易用性付出了很多代价，虽然可以存储不同类型的元素、动态扩容等等是非常好用的，但用在数学计算上效率实在是令人捉急。`ndarray` 不仅封装了一些常用的数学方法，还在效率上做了优化。
+
+就封装来看，`ndarray` 实现了转置、矩阵乘、求均值、求和这样的常用操作，不过最重要的是封装了**广播**操作。
+
+广播是指一个 `ndarray` 在与另一 `ndarray` 或值（标量）加、乘等运算时，会自动把长度为 1 的维度复制[^python_disclaim0]补全成一样的形状。
+
+[^python_disclaim0]: 语义上来讲。底层没有真的复制。
+
+另外，对 `ndarray` 应用函数时可以自动逐元素作用，这也叫广播。广播可以免去许多代码细节（当然也会导致许多混淆，是好是坏？谁知道呢。），常见的如给举证运算的结果加一个偏置。
+
+就优化来看，`ndarray` 做了很多事：
+
+首先，NumPy 本身是大量使用了 C 作为底层实现的，`ndarray` 的值就是在内存里连续排布的，这对缓存比较友好。
+
+另外，NumPy 使用了**向量化**，这不只是免去了 `for` 循环那么简单。向量化会大量使用**单指令流多数据流**（Single Instruction Multiple Data，SIMD）加快运算，这是硬件级别的优化。
+
+此外，向量化时数据被打包成矩阵处理，而矩阵运算是有数学方法优化的。最简单的例子就是矩阵乘法，普通的 2×2 矩阵相乘需要算 8 次乘法和 4 次加法，但 Strassen 算法可以使用巧妙的中间量改为计算 7 次乘法和 18 次加法，少算一次乘法算是很大的优化。NumPy 里面的数学优化当然不止这些，不过理解它们*可能需要****一点****额外的数学知识*。
+
+### PyTorch
+
+#### tensor
+
+张量是高维数组，但 `tensor` 不是张量，或者说不只是张量。`tensor` 是专门给深度学习用的数据类型，它除了 `ndarray` 的功能以外，还附带了深度学习需要的计算图、自动求导等。
+
+我们经常看到神经网络示意图——圆圈代表神经元，线代表权重，这某种意义上就是计算图的表示。计算图可以描述深度学习中的神经元是从哪些神经元算出来的，当然更重要的是我们可以从这上面看出反向传播的那一堆导数是怎么算的。
+
+既然计算图描述了网络是怎么计算的，而求导这件事本身是很机械的（感同身受……），所以自动求导就变成了顺理成章的功能。值得一提的是，`tensor` 同时会具有存放导数的空间，在设置优化器的时候需要传入模型参数的引用，有一方面是为了干这个用的。
+
+另外，`tensor` 还有个广为人知的功能——使用 GPU 加速运算。GPU 比起 CPU 计算这些东西可能快上好几个数量级。
+
+#### Dataset
+
+PyTorch 提供了加载数据集的方法 `DataLoader`，它需要一个存储数据的 `Dataset` 对象。PyTorch 提供了一些常用的数据集:
+
+```python
+from torchvision import datasets, transforms
+from torch.utils.data import DataLoader
+
+# 这个 transform 是数据预处理用的
+transform = transforms.Compose([
+    transforms.ToTensor(),                # 转为 Tensor
+    transforms.Normalize((0.5,), (0.5,))  # 归一化
+])
+
+train_dataset = datasets.MNIST(root='./data', train=True, download=True, transform=transform)
+test_dataset = datasets.MNIST(root='./data', train=False, download=True, transform=transform)
+
+train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)
+test_loader = DataLoader(test_dataset, batch_size=64, shuffle=False)
+
+for images, labels in train_loader:
+    # images labels 是一个 batch 对应的 tensor
+    pass
+```
+
+不过就一般地来讲，可以继承这个类来设定自己的数据集，只要实现：
+
+```python
+from torch.utils.data import Dataset
+
+class MyDataset(Dataset):
+    def __len__(self):
+        # return ...
+        # 这里返回数据集大小
+
+    def __getitem__(self, idx):
+        # image = ...
+        # label = ...
+        # return image, label
+        # 以索引 idx 读取对应的图像和标签
+        # image 一般是 FloatTensor，label 一般是 FloatTensor 或者 LongTensor
+```
+
+然后就能用 `DataLoader` 读取：
+
+```python
+from torch.utils.data import DataLoader
+
+dataset = MyDataset()
+loader = DataLoader(dataset, batch_size=32, shuffle=True)
+
+for images, labels in loader:
+    pass
+```
+
+当然了，这里可以发挥一下面向对象编程的良好习惯，把 transform 这样的预处理封装到 `MyDataset` 里边，不过基本的就这样。
